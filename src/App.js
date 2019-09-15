@@ -1,26 +1,30 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {Gallery, GalleryImage} from 'react-gesture-gallery';
+
+function importAll(r) {
+  return r.keys().map(r);
+}
 
 function App() {
+const [index, setIndex] = React.useState(0);
+const images = importAll(require.context('./images', false, /\.(png|jpe?g|svg)$/));
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ background: "black", width: "100vw", height: "100vh" }}>
+    <Gallery 
+      index = {index}
+      onRequestChange={i =>
+      setIndex(i)}
+      >
+        {images.map(image => (
+          <GalleryImage objectFit="cover" src={image}/>
+        ))}
+    </Gallery>
     </div>
   );
 }
+//import { format } from 'path';
 
 export default App;
